@@ -1,0 +1,49 @@
+@layout('index')
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            Task List
+        </div>
+        <div class="card-body">
+            <div>
+                <form>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Task</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="staticEmail"
+                                   value="">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary">Add Task</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>Task</td>
+                        <td>Action</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @each(task in tasks)
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    @else
+                        <tr>
+                            <td colspan="2" class="text-center">No task created yet!</td>
+                        </tr>
+                    @endeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
