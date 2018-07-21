@@ -7,12 +7,14 @@
         </div>
         <div class="card-body">
             <div>
-                <form>
+                <form action="/add" method="POST">
+                    {{ csrfField() }}
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Task</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="staticEmail"
-                                   value="">
+                                   value="" name="title">
+                            {{ elIf('<span>$self</span>', getErrorFor('title'), hasErrorFor('title')) }}
                         </div>
                         <div class="col-sm-3">
                             <button class="btn btn-primary">Add Task</button>
@@ -21,9 +23,15 @@
                 </form>
             </div>
             <div>
+                @if(old('notification'))
+                    <div class="alert alert-success">{{ old('notification') }}</div>
+                @endif
+            </div>
+            <div>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
+                        <td>No.</td>
                         <td>Task</td>
                         <td>Action</td>
                     </tr>
@@ -31,16 +39,20 @@
                     <tbody>
                     @each(task in tasks)
                     <tr>
+                        <td>{{ ($loop.index + 1) }}</td>
                         <td>{{ task.title }}</td>
                         <td>
-                            <button class="btn btn-danger">Delete</button>
+                            <form method="POST" action="{{ 'delete/' + task.id + '?_method=DELETE' }}">
+                                {{ csrfField() }}
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @else
                         <tr>
                             <td colspan="2" class="text-center">No task created yet!</td>
                         </tr>
-                    @endeach
+                        @endeach
                     </tbody>
                 </table>
             </div>

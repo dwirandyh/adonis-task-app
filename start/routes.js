@@ -16,3 +16,5 @@
 const Route = use('Route')
 
 Route.get('/', 'TaskController.index');
+Route.post('/add', 'TaskController.add');
+Route.delete('/delete/:id', 'TaskController.delete')
